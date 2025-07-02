@@ -1,6 +1,7 @@
-const test: string = "Hello World";
+import { update } from "./update.js";
+import { updateDOM } from "./draw.js";
 
-let number : number
+
 
 let keyUp = false
 let keyDown = false
@@ -21,26 +22,28 @@ function KeyUp (t: { preventDefault: () => void; code: string; })
 let dt : number
 let time = Date.now();
 
-let timeGame = 0 
 
-const  update  = (dt: number) =>  {
-  timeGame+=dt
+export var map : number[][] = []
+const line = [0,0,0,0,0,0,0,0,0,0]
 
-
-
-
-  console.log(dt, timeGame)
+for (let i = 0 ; i<10 ; i++)
+{
+  map.push( line)
 }
 
-const  draw = () =>{
-}
+map[5][5]= 1
+
+console.log(map)
+
+
+
 
 function loop() {
   const now = Date.now();
    dt = now - time;
 
   update(dt);
-  draw();
+  updateDOM();
 
   time = now;
   requestAnimationFrame(loop); 

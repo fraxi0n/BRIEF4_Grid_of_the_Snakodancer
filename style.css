@@ -8,7 +8,7 @@
 }
 
 
-.grid {
+#grid {
 
     position: absolute;
     right : 0;
@@ -20,6 +20,20 @@
 
     display: grid;
 
+    grid-template-columns: repeat(10, 0fr); /* 3 colonnes égales */
+  grid-template-rows: repeat(10, 0fr);    /* 3 lignes égales */
+ 
     
 
+}
+
+.cell {
+    width: 32px;
+    height: 32px;
+    background-image: url(img/snakesprites/png/dalle_64_0.png);
+    background-size: contain;
+
+}
+
+.line {
 }
