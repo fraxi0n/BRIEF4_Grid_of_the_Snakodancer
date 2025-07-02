@@ -2,39 +2,24 @@ import { update } from "./update.js";
 import { updateDOM } from "./draw.js";
 
 
-
-let keyUp = false
-let keyDown = false
-let keyRight = false
-let keyLeft = false
+export let sDir : "left" | "right" | "up" | "down" = "left"
 
 
-function KeyUp (t: { preventDefault: () => void; code: string; })
+
+function keyDown (t: { preventDefault: () => void; code: string; })
 {
   t.preventDefault();
-  if (t.code == "ArrowUp") { keyUp= false}
-  if (t.code == "ArrowDown") { keyDown= false}
-  if (t.code == "ArrowLeft") { keyLeft= false}
-  if (t.code == "ArrowRight") { keyRight= false}
+
+  //f12 marche??
+  if (t.code == "ArrowUp") {sDir = "up"}
+  if (t.code == "ArrowDown") { sDir = "down"}
+  if (t.code == "ArrowLeft") { sDir = "left"}
+  if (t.code == "ArrowRight") { sDir = "right"}
 
 }
 
 let dt : number
 let time = Date.now();
-
-
-export var map : number[][] = []
-const line = [0,0,0,0,0,0,0,0,0,0]
-
-for (let i = 0 ; i<10 ; i++)
-{
-  map.push( line)
-}
-
-map[5][5]= 1
-
-console.log(map)
-
 
 
 
