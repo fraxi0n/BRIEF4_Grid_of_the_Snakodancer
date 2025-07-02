@@ -6,9 +6,14 @@ export let sDir : "left" | "right" | "up" | "down" = "left"
 
 
 
-function keyDown (t: { preventDefault: () => void; code: string; })
+function changeDir (t: KeyboardEvent)
 {
+
+  if (t.code=== "f12")
+  {
   t.preventDefault();
+
+  }
 
   //f12 marche??
   if (t.code == "ArrowUp") {sDir = "up"}
@@ -17,6 +22,7 @@ function keyDown (t: { preventDefault: () => void; code: string; })
   if (t.code == "ArrowRight") { sDir = "right"}
 
 }
+document.addEventListener("keydown" ,changeDir)
 
 let dt : number
 let time = Date.now();

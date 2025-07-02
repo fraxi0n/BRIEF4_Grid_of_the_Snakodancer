@@ -1,16 +1,16 @@
-import { map } from "./draw.js"
+import { map, modifyGrid } from "./draw.js"
 import { sDir } from "./main.js"
 
 let timeGame = 0
 
-const speedSnake = 2000
+const speedSnake = 200
 
 let sTimer = 0
 
 
-const snake = {
+export const snake = {
   x: 9, y: 5,
-  lg: 1,
+  lg: 5,
 
   left: () => {
     snake.x--
@@ -20,21 +20,21 @@ const snake = {
   }
   ,
   right: () => {
-    snake.x--
-    if (snake.x < 0) {
-      snake.x = 9
+    snake.x++
+    if (snake.x > 9) {
+      snake.x = 0
     }
   },
   up: () => {
-    snake.x--
-    if (snake.x < 0) {
-      snake.x = 9
+    snake.y--
+    if (snake.y < 0) {
+      snake.y = 9
     }
   },
   down: () => {
-    snake.x--
-    if (snake.x < 0) {
-      snake.x = 9
+    snake.y++
+    if (snake.y > 9) {
+      snake.y = 0
     }
   }
 
@@ -53,13 +53,21 @@ export const update = (dt: number) => {
   if (sTimer >= speedSnake) {
     sTimer -= speedSnake
 
+    modifyGrid(
+      (i: number, j: number, cell: number)=>{
+        if ( map[i][j] >0)
+        {
+           map[i][j] --
+        }
+      }
+    )
+
     snake[sDir]()
 
     map[snake.y][snake.x] = snake.lg
 
   }
 
-  //   console.log(dt, timeGame)
 
 
 
