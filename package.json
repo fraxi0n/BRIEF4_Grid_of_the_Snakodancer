@@ -1,14 +1,14 @@
 {
   "name": "projet_ts",
   "version": "1.0.0",
-  "description": "lib projet ts ",
+  "description": "brief  4 ",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "ts_empty_project"
+    "url": "BRIEF4_Grid_of_the_Snakodancer"
   },
   "author": "fraxion",
   "license": "ISC",

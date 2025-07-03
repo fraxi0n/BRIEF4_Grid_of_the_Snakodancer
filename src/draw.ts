@@ -1,34 +1,12 @@
 // import { map } from "./main.js";
 
-import {  snake } from "./update.js";
-import { gridSize ,DOM_grid } from "./load.js"
+import { gridSize ,DOM_grid, snake, modifyGrid, map } from "./load.js"
 
-
-export const map: number[][] = Array.from({ length: gridSize }, () =>
-    Array(gridSize).fill(0)
-);
 
 
 // const DOM_grid = document.getElementById("DOM_grid")
 
 
-
-export const modifyGrid = (    pFunction :( i : number , j:number, num : number )=> void ) => {
-    let i = 0
-    let j = 0
-    console.log(map)
-
-    map.forEach((line: number[]) => {
-        line.forEach(cell => {
-            pFunction(i,j , cell)
-            j++
-        });
-        j = 0
-        i++
-
-    });
-
-}
 
 
 const fillGrid : (i: number, j: number, cell: number) => void  = (i:number,j:number,cell:number) => {
@@ -48,7 +26,7 @@ tete.src = "img/snakesprites/png/snake_1.png"
 document.getElementById(`l1_c3`)?.appendChild(tete)
 
 
-export const updateDOM = () => {
+export const updateDOM = (sTimer : number) => {
 
     for (let line = 0; line < gridSize; line++) {
         for (let column = 0; column < gridSize; column++) {
