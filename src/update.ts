@@ -1,27 +1,28 @@
 import { map, modifyGrid } from "./draw.js"
 import { sDir } from "./main.js"
+import { gridSize } from "./load.js"
+
 
 let timeGame = 0
 
-const speedSnake = 200
-
+const speedSnake = 500
 let sTimer = 0
 
 
 export const snake = {
-  x: 9, y: 5,
-  lg: 5,
+  x: gridSize-1, y: 0,
+  lg: 3,
 
   left: () => {
     snake.x--
     if (snake.x < 0) {
-      snake.x = 9
+      snake.x = gridSize-1
     }
   }
   ,
   right: () => {
     snake.x++
-    if (snake.x > 9) {
+    if (snake.x > gridSize-1) {
       snake.x = 0
     }
   },
@@ -57,7 +58,7 @@ export const update = (dt: number) => {
       (i: number, j: number, cell: number)=>{
         if ( map[i][j] >0)
         {
-           map[i][j] --
+          map[i][j] --
         }
       }
     )

@@ -20,11 +20,6 @@
 
     display: grid;
 
-    grid-template-columns: repeat(10, 0fr); /* 3 colonnes égales */
-  grid-template-rows: repeat(10, 0fr);    /* 3 lignes égales */
- 
-    
-
 }
 
 .cell {
