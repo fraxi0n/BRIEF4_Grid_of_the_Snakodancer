@@ -23,10 +23,14 @@
 }
 
 .cell {
+    display: flex ;
+    justify-content: center;
+    align-items: center;
     width: 32px;
     height: 32px;
     background-image: url(img/snakesprites/png/dalle_64_0.png);
     background-size: contain;
+    padding: auto;
 
 }
 

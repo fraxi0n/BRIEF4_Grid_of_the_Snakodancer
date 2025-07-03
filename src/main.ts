@@ -22,6 +22,11 @@ function changeDir (t: KeyboardEvent)
   t.preventDefault();
   }
 
+  if (isTempo)
+  {
+    isMoving=true
+
+
   if (t.code == "ArrowUp" ) {   sDir=="down"? stopMoving() :sDir = "up" }
   if (t.code == "ArrowDown" ) {   sDir=="up"? stopMoving() :sDir = "down" }
   if (t.code == "ArrowLeft" ) {   sDir=="right"? stopMoving() :sDir = "left" }
@@ -33,21 +38,39 @@ function changeDir (t: KeyboardEvent)
     "left"}
   if (t.code == "ArrowRight") { sDir = 
     "right"}
+  }
+
+
+  else
+  {stopMoving()}
+
 
 }
 document.addEventListener("keydown" ,changeDir)
 
 let dt : number
 let time = Date.now();
-const speedSnake = 500
+const speedSnake = 700
+
+let isTempo = false
 
 let sTimer = 0
 export const sTimerInc = (incValue: number) => {
   sTimer += incValue
 
+
+
+  if (sTimer> speedSnake*0.6 )
+  {
+     isTempo = true
+  }
+
+
   if (sTimer > speedSnake  )
   {
     sTimer = sTimer%speedSnake
+    isTempo = false
+
     return true
   }
   return false
@@ -59,7 +82,7 @@ function loop() {
   dt = now - time;
 
   update(dt,sTimer, isMoving);
-  updateDOM(sTimer);
+  updateDOM(sTimer, isTempo );
 
 
   time = now;

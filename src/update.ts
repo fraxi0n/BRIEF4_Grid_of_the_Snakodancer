@@ -39,7 +39,14 @@ export const update = (dt: number, pTimer:number, pMoving: boolean) => {
     )
 
     snake[sDir]()
+    if (map[snake.y][snake.x] === 0)
+    {
     map[snake.y][snake.x] = snake.lg
+    }
+    else 
+    {
+      alert("GAME OVER press F5" )
+    }
 
   }
   }

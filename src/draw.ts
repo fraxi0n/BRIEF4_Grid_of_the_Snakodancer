@@ -26,7 +26,7 @@ tete.src = "img/snakesprites/png/snake_1.png"
 document.getElementById(`l1_c3`)?.appendChild(tete)
 
 
-export const updateDOM = (sTimer : number) => {
+export const updateDOM = (sTimer : number, isTempo : boolean ) => {
 
     for (let line = 0; line < gridSize; line++) {
         for (let column = 0; column < gridSize; column++) {
@@ -45,7 +45,14 @@ export const updateDOM = (sTimer : number) => {
                     const tete: HTMLImageElement = document.createElement("img");
                     tete.src = "img/snakesprites/png/snake_1.png"
                     tete.classList.add("cell")
+                    if(isTempo)
+                    {
+                        tete.style.width =  "25px"
+                        tete.style.height =  "25px"
+                    }
+                    
                     cell?.appendChild(tete)
+
                 }
                 else if (map[line][column] > 0  )
                 {
@@ -53,6 +60,11 @@ export const updateDOM = (sTimer : number) => {
                     const queue: HTMLImageElement = document.createElement("img");
                     queue.src = "img/snakesprites/png/corps.png"
                     queue.classList.add("cell")
+                    if(isTempo)
+                    {
+                        queue.style.width =  "25px"
+                        queue.style.height =  "25px"
+                    }
                     cell?.appendChild(queue)
 
                 }

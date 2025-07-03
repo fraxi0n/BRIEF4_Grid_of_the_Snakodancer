@@ -17,7 +17,7 @@ export const map: number[][] = Array.from({ length: gridSize }, () =>
 
 export const snake = {
   x: gridSize-1, y: 0,
-  lg: 3,
+  lg: 5,
 
   left: () => {
     snake.x--
@@ -48,7 +48,7 @@ export const snake = {
 }
 
 
-export const modifyGrid = (    pFunction :( i : number , j:number, num : number )=> void ) => {
+export const modifyGrid = ( pFunction :( i : number , j:number, num : number )=> void ) => {
     let i = 0
     let j = 0
 
