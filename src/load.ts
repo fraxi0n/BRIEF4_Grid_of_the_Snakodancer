@@ -1,4 +1,4 @@
-export const gridSize = 5
+export const gridSize = 15
 
 // const DOM_grid : HTMLElement | null = document.getElementById("grid").
 
@@ -15,13 +15,19 @@ export const map: number[][] = Array.from({ length: gridSize }, () =>
 );
 
 
+export const gameOver = () => {
+      alert("GAME OVER press F5" )
+} 
+
+
 export const snake = {
   x: gridSize-1, y: 0,
-  lg: 5,
+  lg: 10,
 
   left: () => {
     snake.x--
     if (snake.x < 0) {
+      gameOver()
       snake.x = gridSize-1
     }
   }
@@ -29,6 +35,8 @@ export const snake = {
   right: () => {
     snake.x++
     if (snake.x > gridSize-1) {
+      gameOver()
+
       snake.x = 0
     }
   },
@@ -36,12 +44,15 @@ export const snake = {
     snake.y--
     if (snake.y < 0) {
       snake.y = gridSize-1
+      gameOver()
+
     }
   },
   down: () => {
     snake.y++
     if (snake.y > gridSize - 1 ) {
       snake.y = 0
+      gameOver()
     }
   }
 

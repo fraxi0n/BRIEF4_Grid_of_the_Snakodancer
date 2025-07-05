@@ -1,5 +1,5 @@
 import { sDir, sTimerInc } from "./main.js"
-import {  map, modifyGrid, snake } from "./load.js"
+import {  gameOver, map, modifyGrid, snake } from "./load.js"
 
 
 // let timeGame = 0
@@ -13,17 +13,9 @@ map[snake.y][snake.x] = snake.lg
 export const update = (dt: number, pTimer:number, pMoving: boolean) => {
   // timeGame += dt
 
-
-
-
-
   if (sTimerInc(dt)) {
 
-
-
     // console.log(sTimer%speedSnake ,  sTimer , speedSnake )
-
-
 
     if (pMoving)
     {
@@ -45,7 +37,7 @@ export const update = (dt: number, pTimer:number, pMoving: boolean) => {
     }
     else 
     {
-      alert("GAME OVER press F5" )
+      gameOver()
     }
 
   }
