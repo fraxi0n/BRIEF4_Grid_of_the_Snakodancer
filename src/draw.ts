@@ -1,6 +1,6 @@
 // import { map } from "./main.js";
 
-import { gridSize, DOM_grid, snake, modifyGrid, map } from "./load.js";
+import { GS, DOM_grid, snake, modifyGrid, map } from "./load.js";
 
 // const DOM_grid = document.getElementById("DOM_grid")
 
@@ -40,8 +40,8 @@ const createDomTempo = () => {
 createDomTempo()
 
 export const updateDOM = (sTimer: number, isTempo: boolean) => {
-  for (let line = 0; line < gridSize; line++) {
-    for (let column = 0; column < gridSize; column++) {
+  for (let line = 0; line < GS.gridSize; line++) {
+    for (let column = 0; column < GS.gridSize; column++) {
       const cell = document.getElementById(`l${line}_c${column}`);
 
       if (cell != null) { //clear des cells

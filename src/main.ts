@@ -1,5 +1,6 @@
 import { update } from "./update.js";
 import { updateDOM } from "./draw.js";
+import { GS } from "./load.js";
 
 type Direction = "left" | "right" | "up" | "down";
 
@@ -31,7 +32,6 @@ function changeDir(t: KeyboardEvent) {
     if (t.code == "ArrowRight") {
       sDir == "left" ? stopMoving() : (sDir = "right");
     }
-
   } else {
     stopMoving();
   }
@@ -40,9 +40,6 @@ document.addEventListener("keydown", changeDir);
 
 let dt: number;
 let time = Date.now();
-const speedSnake = 200;
-const tempoSnake = 0.95; //marge d'erreur
-const windowSize = 500;
 
 let isTempo = false;
 
@@ -50,12 +47,12 @@ let sTimer = 0;
 const sTimerInc = (incValue: number) => {
   sTimer += incValue;
 
-  if (sTimer > speedSnake * (1 - tempoSnake)) {
+  if (sTimer > GS.speedSnake * (1 - GS.tempoSnake)) {
     isTempo = true;
   }
 
-  if (sTimer > speedSnake) {
-    sTimer = sTimer % speedSnake;
+  if (sTimer > GS.speedSnake) {
+    sTimer = sTimer % GS.speedSnake;
     isTempo = false;
     return true;
   }
@@ -75,4 +72,4 @@ function loop() {
 
 requestAnimationFrame(loop);
 
-export {sTimerInc , sDir}
+export { sTimerInc, sDir };

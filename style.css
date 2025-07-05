@@ -1,77 +1,60 @@
 .daddy {
+  display: flex;
+  width: 100%;
+  height: 500px;
+  background-color: tomato;
 
-    display : flex;
-    width: 100%;
-    height: 500px;
-    background-color: tomato;
-
-     justify-content: flex-end; 
-
+  justify-content: flex-end;
 }
 
-
 #grid {
-
-    /* position: absolute; */
-    right : 0;
-    width: 500px;
-    height: 500px;
-    background-color: aliceblue;
-    display: grid;
-
+  /* position: absolute; */
+  right: 0;
+  width: 500px;
+  height: 500px;
+  background-color: aliceblue;
+  display: grid;
 }
 
 .cell {
-    display: flex ;
-    justify-content: center;
-    align-items: center;
-    width: 32px;
-    height: 32px;
-    background-image: url(img/snakesprites/png/dalle_64_0.png);
-    background-size: contain;
-    padding: auto;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  background-image: url(img/snakesprites/png/dalle_64_0.png);
+  background-size: contain;
+  padding: auto;
 }
 
 .tempo {
-    
-
-    width: 50px;
-    background-color: aqua;
+  width: 50px;
+  background-color: aqua;
 }
-
 
 .half-tempo {
-    position: relative;
-    height: 50%;
-    width: 100%;
-    background-color: blueviolet;
-
+  position: relative;
+  height: 50%;
+  width: 100%;
+  background-color: blueviolet;
 }
-
 
 .good-tempo {
-    height: 40%;
-    width: 100%;
-    background-color: rgb(43, 226, 43);
-
+  height: 40%;
+  width: 100%;
+  background-color: rgb(43, 226, 43);
 }
 
-
 .bad-tempo {
-    height: 60%;
-    width: 100%;
-    background-color: rgb(226, 43, 43);
-
+  height: 60%;
+  width: 100%;
+  background-color: rgb(226, 43, 43);
 }
 
 .tempo-bar {
-    width: 100px; 
-    position : absolute;
-    x: 200px;
-    y: 0;
-    z-index: 3;
-
-
-
+  width: 100px;
+  position: absolute;
+  x: 200px;
+  y: 0;
+  z-index: 3;
 }
