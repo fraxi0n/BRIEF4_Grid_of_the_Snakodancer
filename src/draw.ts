@@ -44,13 +44,21 @@ export const updateDOM = (sTimer: number, isTempo: boolean) => {
     for (let column = 0; column < gridSize; column++) {
       const cell = document.getElementById(`l${line}_c${column}`);
 
-      if (cell !== null) {
-        cell.innerText = "test";
+      if (cell != null) { //clear des cells
         cell.innerHTML = "";
       }
 
       if (map && map[line][column]) {
-        if (map[line][column] === snake.lg) {
+
+        if (map[line][column]<0)
+        {
+          const apple: HTMLImageElement = document.createElement("img");
+          apple.src = "img/snakesprites/png/apple.png";
+          apple.classList.add("cell");
+          cell?.appendChild(apple);
+
+        }
+        else if (map[line][column] === snake.lg) {
           const tete: HTMLImageElement = document.createElement("img");
           tete.src = "img/snakesprites/png/snake_1.png";
           tete.classList.add("cell");

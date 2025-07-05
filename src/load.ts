@@ -1,8 +1,7 @@
-export const gridSize = 15
+const gridSize = 5
 
-// const DOM_grid : HTMLElement | null = document.getElementById("grid").
 
-export const DOM_grid = document.getElementById("grid")
+const DOM_grid: HTMLElement | null= document.getElementById("grid")
 
 
 if (DOM_grid) {
@@ -10,17 +9,35 @@ if (DOM_grid) {
   DOM_grid.style.gridTemplateRows = `repeat(${gridSize}, 0fr)`;
 }
 
-export const map: number[][] = Array.from({ length: gridSize }, () =>
+const map: number[][] = Array.from({ length: gridSize }, () =>
     Array(gridSize).fill(0)
 );
 
 
-export const gameOver = () => {
-      alert("GAME OVER press F5" )
+const gameOver = () => {
+      // alert("GAME OVER press F5" )
 } 
 
+const apple  = { x: 0 , y: 0 } 
 
-export const snake = {
+
+const createApple = () =>  {
+
+ do {
+  apple.x =  Math.floor( Math.random()*gridSize)
+  apple.y =  Math.floor( Math.random()*gridSize)
+}
+  while (map[apple.x][apple.y]!==0 )
+
+  map[apple.x][apple.y] = -1
+
+}
+
+createApple()
+
+
+
+const snake = {
   x: gridSize-1, y: 0,
   lg: 10,
 
@@ -59,7 +76,10 @@ export const snake = {
 }
 
 
-export const modifyGrid = ( pFunction :( i : number , j:number, num : number )=> void ) => {
+map[snake.y][snake.x] = snake.lg
+
+
+const modifyGrid = ( pFunction :( i : number , j:number, num : number )=> void ) => {
     let i = 0
     let j = 0
 
@@ -74,3 +94,6 @@ export const modifyGrid = ( pFunction :( i : number , j:number, num : number )=>
     });
 
 }
+
+
+export {gameOver, map , DOM_grid, snake ,modifyGrid , gridSize , createApple}

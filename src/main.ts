@@ -3,9 +3,9 @@ import { updateDOM } from "./draw.js";
 
 type Direction = "left" | "right" | "up" | "down";
 
-export let sDir: Direction = "left";
-export let isMoving = true;
-export const moveHistory: Direction[] = ["left"];
+let sDir: Direction = "left";
+let isMoving = true;
+const moveHistory: Direction[] = ["left"];
 
 const stopMoving = () => {
   isMoving = false;
@@ -32,15 +32,6 @@ function changeDir(t: KeyboardEvent) {
       sDir == "left" ? stopMoving() : (sDir = "right");
     }
 
-    if (t.code == "ArrowDown") {
-      sDir = "down";
-    }
-    if (t.code == "ArrowLeft") {
-      sDir = "left";
-    }
-    if (t.code == "ArrowRight") {
-      sDir = "right";
-    }
   } else {
     stopMoving();
   }
@@ -51,12 +42,12 @@ let dt: number;
 let time = Date.now();
 const speedSnake = 200;
 const tempoSnake = 0.95; //marge d'erreur
-export const windowSize = 500;
+const windowSize = 500;
 
 let isTempo = false;
 
 let sTimer = 0;
-export const sTimerInc = (incValue: number) => {
+const sTimerInc = (incValue: number) => {
   sTimer += incValue;
 
   if (sTimer > speedSnake * (1 - tempoSnake)) {
@@ -83,3 +74,5 @@ function loop() {
 }
 
 requestAnimationFrame(loop);
+
+export {sTimerInc , sDir}
