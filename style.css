@@ -40,21 +40,37 @@
 }
 
 .good-tempo {
-  height: 40%;
+  /* height: 40%; */
+  position: absolute;
+  bottom: 0;
+
   width: 100%;
   background-color: rgb(43, 226, 43);
 }
 
+
+.top-tempo {
+  position: absolute;
+  top :0
+}
+
+.bottom-tempo {
+  position: absolute;
+  bottom : 0;
+}
+
+
 .bad-tempo {
-  height: 60%;
-  width: 100%;
+
+  /* height: 60%; */
+  width: 50px;
   background-color: rgb(226, 43, 43);
 }
 
 .tempo-bar {
-  width: 100px;
+  width: 50px;
   position: absolute;
-  x: 200px;
-  y: 0;
+  /* x: 100px;
+  y: 1000px; */
   z-index: 3;
 }

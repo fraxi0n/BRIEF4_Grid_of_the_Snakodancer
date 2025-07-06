@@ -2,15 +2,15 @@ const GS = {
   //GAME STATS
 
   windowSize: 500, //todo
-  isGOD: false,
+  isGOD: true, // todo real death screen
 
-  gridSize: 8,
   isWallKilling: true,
+  gridSize: 8,
 
   nbApple: 3,
   isAppleRespawn: true,
-  speedSnake: 600,
-  tempoSnake: 0.9, //marge d'erreur implémenté style dans la div todo
+  speedSnake: 900,
+  tempoSnake: 0.4,
 
   //valeur de départ peu d'importance
   snakeLg: 1,
@@ -24,10 +24,21 @@ const map: number[][] = Array.from({ length: GS.gridSize }, () =>
 
 const DOM_grid: HTMLElement | null = document.getElementById("grid");
 
+
+
+
+
+
+
+
+
+
 if (DOM_grid) {
   DOM_grid.style.gridTemplateColumns = `repeat(${GS.gridSize}, 0fr)`;
   DOM_grid.style.gridTemplateRows = `repeat(${GS.gridSize}, 0fr)`;
 }
+
+
 
 const apple = { x: 0, y: 0 };
 
