@@ -2,7 +2,7 @@ const GS = {
   //GAME STATS
 
   windowSize: 500, //todo
-  soundOn: true,
+  soundOn: false,
   audio : new Audio("music/1-1.mp3"),
 
   isGOD: false, // todo real death screen
@@ -17,7 +17,9 @@ const GS = {
   speedSnake: 1000/(115/60) , //115 = bpm NE PAS CHANGER
   tempoSnake: 0.6,
 
-  isOutTempoStop: false, // todo  
+  isTempoRequired: true,
+  moveHistory : false , // todo
+  isOutTempoBomb : false, // todo
 
   //valeur de départ peu d'importance
   snakeLg: 2,
@@ -33,14 +35,6 @@ const map: number[][] = Array.from({ length: GS.gridSize }, () =>
 );
 
 const DOM_grid: HTMLElement | null = document.getElementById("grid");
-
-
-
-
-
-
-
-
 
 
 if (DOM_grid) {
@@ -112,6 +106,10 @@ const snake = {
       GS.isWallKilling && gameOver();
     }
   },
+  stopped: () => {
+    alert("bug")
+    console.error( "stopped" );
+  }
 };
 
 map[snake.y][snake.x] = snake.lg;

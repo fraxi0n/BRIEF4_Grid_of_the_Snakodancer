@@ -1,4 +1,4 @@
-import { sDir, sTimerInc } from "./main.js";
+import { sDir, sTimerInc, stopMoving } from "./main.js";
 import { gameOver, map, modifyGrid, snake, createApple, GS } from "./load.js";
 
 // let timeGame = 0
@@ -18,13 +18,13 @@ const checkSnakeCase = () => {
   }
 };
 
-export const update = (dt: number, pTimer: number, pMoving: boolean) => {
+export const update = (dt: number) => {
   // timeGame += dt
 
   if (sTimerInc(dt)) {
     // console.log(sTimer%speedSnake ,  sTimer , speedSnake )
 
-    if (pMoving) {
+    if (sDir!=="stopped") {
       modifyGrid((i: number, j: number, cell: number) => {
         if (map[i][j] > 0) {
           map[i][j]--;
@@ -33,6 +33,7 @@ export const update = (dt: number, pTimer: number, pMoving: boolean) => {
 
       snake[sDir]();
       checkSnakeCase();
+      GS.isTempoRequired&&stopMoving()
     }
   }
 };

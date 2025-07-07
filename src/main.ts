@@ -2,14 +2,14 @@ import { update } from "./update.js";
 import { updateDOM } from "./draw.js";
 import { GS } from "./load.js";
 
-type Direction = "left" | "right" | "up" | "down";
+type Direction = "left" | "right" | "up" | "down" |"stopped";
 
-let sDir: Direction = "left";
-let isMoving = true;
-const moveHistory: Direction[] = ["left"];
+let sDir: Direction = "stopped";
+let tempoFailed = false
+// const moveHistory: Direction[] = ["left"]; // todo
 
 const stopMoving = () => {
-  isMoving = false;
+  sDir="stopped"
 };
 
 function changeDir(t: KeyboardEvent) {
@@ -17,8 +17,7 @@ function changeDir(t: KeyboardEvent) {
     t.preventDefault();
   }
 
-  if (isTempo) {
-    isMoving = true;
+  if (isTempo && !tempoFailed) {
 
     if (t.code == "ArrowUp") {
       sDir == "down" ? stopMoving() : (sDir = "up");
@@ -34,6 +33,7 @@ function changeDir(t: KeyboardEvent) {
     }
   } else {
     stopMoving();
+    tempoFailed = true 
   }
   if (!GS.run) {
     runGame();
@@ -57,6 +57,7 @@ const sTimerInc = (incValue: number) => {
   if (sTimer > GS.speedSnake) {
     sTimer = sTimer % GS.speedSnake;
     isTempo = false;
+    tempoFailed=false
     return true;
   }
   return false;
@@ -66,7 +67,7 @@ const runGame = () => {
   GS.run = true;
   GS.soundOn && GS.audio.play();
 
-  GS.audio.currentTime = 10.71 % (115 / 60); //callage du rhtme sur la musique
+  GS.audio.currentTime = 10.71 % (115 / 60); //callage du rhytme sur la musique
 
   GS.audio.volume = 0.5;
 
@@ -81,11 +82,11 @@ function loop() {
   const now = Date.now();
   dt = now - time;
 
-  update(dt, sTimer, isMoving);
+  update(dt);
   updateDOM(sTimer, isTempo);
 
   time = now;
   requestAnimationFrame(loop);
 }
 
-export { sTimerInc, sDir };
+export { sTimerInc, sDir , stopMoving };
