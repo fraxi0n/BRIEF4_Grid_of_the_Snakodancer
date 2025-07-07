@@ -2,21 +2,31 @@ const GS = {
   //GAME STATS
 
   windowSize: 500, //todo
-  isGOD: true, // todo real death screen
+  soundOn: true,
+  audio : new Audio("music/1-1.mp3"),
 
-  isWallKilling: true,
-  gridSize: 8,
+  isGOD: false, // todo real death screen
 
-  nbApple: 3,
-  isAppleRespawn: true,
-  speedSnake: 900,
-  tempoSnake: 0.4,
+  isWallKilling: false,
+  gridSize: 5,
+
+  nbApple: 10,
+  isAppleRespawn: false,
+
+
+  speedSnake: 1000/(115/60) , //115 = bpm NE PAS CHANGER
+  tempoSnake: 0.6,
+
+  isOutTempoStop: false, // todo  
 
   //valeur de départ peu d'importance
-  snakeLg: 1,
+  snakeLg: 2,
   snakeOX: 9, //not use
   snakeOY: 2, // not use
+
+  run : false // true = run des le launch
 };
+
 
 const map: number[][] = Array.from({ length: GS.gridSize }, () =>
   Array(GS.gridSize).fill(0)
@@ -56,7 +66,16 @@ for (let i = 1; i <= GS.nbApple; i++) {
 }
 
 const gameOver = () => {
-  !GS.isGOD && alert("GAME OVER press F5");
+
+  if (!GS.isGOD )
+  {
+    GS.audio.pause()
+    
+
+  alert("GAME OVER press F5");
+
+  }
+
 };
 
 const snake = {

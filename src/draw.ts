@@ -1,8 +1,6 @@
-// import { map } from "./main.js";
-
 import { GS, DOM_grid, snake, modifyGrid, map } from "./load.js";
 
-const nbBarTempo = 2;
+const nbBarTempo = 3;
 
 const DOM_goodTempo: HTMLElement [] =  [...document.getElementsByClassName("good-tempo")] as HTMLElement[];
 const DOM_badTempo: HTMLElement [] = [...document.getElementsByClassName("bad-tempo")] as HTMLElement[];
@@ -121,7 +119,7 @@ export const updateDOM = (sTimer: number, isTempo: boolean) => {
           const tete: HTMLImageElement = document.createElement("img");
           tete.src = "img/snakesprites/png/snake_1.png";
           tete.classList.add("cell");
-          if (isTempo) {
+          if (!isTempo) {
             tete.style.width = "25px";
             tete.style.height = "25px";
           }
@@ -131,7 +129,7 @@ export const updateDOM = (sTimer: number, isTempo: boolean) => {
           const queue: HTMLImageElement = document.createElement("img");
           queue.src = "img/snakesprites/png/corps.png";
           queue.classList.add("cell");
-          if (isTempo) {
+          if (!isTempo) {
             queue.style.width = "25px";
             queue.style.height = "25px";
           }

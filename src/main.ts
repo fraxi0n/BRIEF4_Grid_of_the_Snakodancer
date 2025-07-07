@@ -35,6 +35,9 @@ function changeDir(t: KeyboardEvent) {
   } else {
     stopMoving();
   }
+  if (!GS.run) {
+    runGame();
+  }
 }
 document.addEventListener("keydown", changeDir);
 
@@ -59,6 +62,21 @@ const sTimerInc = (incValue: number) => {
   return false;
 };
 
+const runGame = () => {
+  GS.run = true;
+  GS.soundOn && GS.audio.play();
+
+  GS.audio.currentTime = 10.71 % (115 / 60); //callage du rhtme sur la musique
+
+  GS.audio.volume = 0.5;
+
+  requestAnimationFrame(loop);
+};
+
+if (GS.run) {
+  runGame();
+}
+
 function loop() {
   const now = Date.now();
   dt = now - time;
@@ -69,7 +87,5 @@ function loop() {
   time = now;
   requestAnimationFrame(loop);
 }
-
-requestAnimationFrame(loop);
 
 export { sTimerInc, sDir };
