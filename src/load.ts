@@ -1,23 +1,25 @@
-const GS = {
-  //GAME STATS
+type BPM = 115|130|150
+const gameStatBPM :  BPM = 115 // séparer pour le typage et le calcul  
+
+const GS = { //GAME STATS
 
   windowSize: 500, //todo
-  soundOn: false,
-  audio : new Audio("music/1-1.mp3"),
+  soundOn: true,
+  bpm : gameStatBPM, 
 
   isGOD: false, // todo real death screen
 
   isWallKilling: false,
-  gridSize: 5,
+  gridSize: 8,
 
-  nbApple: 10,
-  isAppleRespawn: false,
+  nbApple: 8,
+  isAppleRespawn: true,
 
 
-  speedSnake: 1000/(115/60) , //115 = bpm NE PAS CHANGER
-  tempoSnake: 0.6,
+  speedSnake: 1000/(gameStatBPM/60) ,
+  tempoSnake: 0.5, // 0.1-> 1
 
-  isTempoRequired: true,
+  isTempoRequired: true ,
   moveHistory : false , // todo
   isOutTempoBomb : false, // todo
 
@@ -28,6 +30,11 @@ const GS = {
 
   run : false // true = run des le launch
 };
+
+export const  audio = { 
+    115 : new Audio ("../music/115.mp3"),
+    130 : new Audio ("../music/130.mp3"),
+    150 : new Audio ("../music/150.mp3") }
 
 
 const map: number[][] = Array.from({ length: GS.gridSize }, () =>
@@ -41,8 +48,6 @@ if (DOM_grid) {
   DOM_grid.style.gridTemplateColumns = `repeat(${GS.gridSize}, 0fr)`;
   DOM_grid.style.gridTemplateRows = `repeat(${GS.gridSize}, 0fr)`;
 }
-
-
 
 const apple = { x: 0, y: 0 };
 
@@ -63,8 +68,8 @@ const gameOver = () => {
 
   if (!GS.isGOD )
   {
-    GS.audio.pause()
-    
+    audio[GS.bpm].pause()
+
 
   alert("GAME OVER press F5");
 

@@ -1,6 +1,6 @@
 import { update } from "./update.js";
 import { updateDOM } from "./draw.js";
-import { GS } from "./load.js";
+import { audio, GS } from "./load.js";
 
 type Direction = "left" | "right" | "up" | "down" |"stopped";
 
@@ -65,11 +65,11 @@ const sTimerInc = (incValue: number) => {
 
 const runGame = () => {
   GS.run = true;
-  GS.soundOn && GS.audio.play();
+  GS.soundOn && audio[GS.bpm].play();
 
-  GS.audio.currentTime = 10.71 % (115 / 60); //callage du rhytme sur la musique
+  audio[GS.bpm].currentTime = 10.71 % (115 / 60); //callage du rhytme sur la musique
 
-  GS.audio.volume = 0.5;
+  audio[GS.bpm].volume = 0.5;
 
   requestAnimationFrame(loop);
 };
