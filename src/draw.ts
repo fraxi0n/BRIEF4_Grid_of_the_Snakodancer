@@ -17,7 +17,7 @@ DOM_badTempo.forEach((div) => {
   div.style = `height: ${(1 - GS.tempoSnake / nbBarTempo) * 100}%`;
 });
 
-// const DOM_grid = document.getElementById("DOM_grid")
+const cellsW = GS.windowSize /GS.gridSize 
 
 const fillGrid: (i: number, j: number, cell: number) => void = (
   i: number,
@@ -27,6 +27,9 @@ const fillGrid: (i: number, j: number, cell: number) => void = (
   const newCell: HTMLElement = document.createElement("div");
   newCell.id = `l${i}_c${j}`;
   newCell.classList.add("cell");
+  newCell.style.height = cellsW+"px"
+  newCell.style.width = cellsW+"px"
+
   DOM_grid?.appendChild(newCell);
 };
 
@@ -115,7 +118,7 @@ export const updateDOM = (sTimer: number, isTempo: boolean) => {
             cell?.appendChild(apple);
           } else {
             const bomb: HTMLImageElement = document.createElement("img");
-            bomb.src = "img/snakesprites/png/bomb.png";
+            bomb.src = "img/snakesprites/png/bomb_64.png";
             bomb.classList.add("cell");
             cell?.appendChild(bomb);
           }

@@ -10,8 +10,8 @@
 #grid {
   /* position: absolute; */
   right: 0;
-  width: 500px;
-  height: 500px;
+  /* width: 500px; */
+  /* height: 500px; */
   background-color: aliceblue;
   display: grid;
 }
@@ -20,8 +20,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 32px;
-  height: 32px;
+  /* width: 32px; */
+  /* height: 32px; */
   background-image: url(img/snakesprites/png/dalle_64_0.png);
   background-size: contain;
   padding: auto;
@@ -74,3 +74,5 @@
   y: 1000px; */
   z-index: 3;
 }
+
+

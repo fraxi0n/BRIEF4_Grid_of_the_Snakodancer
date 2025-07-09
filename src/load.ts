@@ -4,20 +4,20 @@ const gameStatBPM: BPM = 115; // séparer pour le typage et le calcul
 const GS = {
   //GAME STATS
 
-  windowSize: 500, //todo
+  windowSize: window.innerHeight - 10, //todo
   soundOn: true,
   bpm: gameStatBPM,
 
   isGOD: false, // todo real death screen
 
   isWallKilling: false,
-  gridSize: 8,
+  gridSize: 9,
 
   nbApple: 5,
   isAppleRespawn: true,
 
   speedSnake: 1000 / (gameStatBPM / 60),
-  tempoSnake: 0.33, // 0.1-> 1
+  tempoSnake: 0.66, // 0.1-> 1
 
   isOutTempoBomb: true,
 
@@ -45,7 +45,11 @@ const map: number[][] = Array.from({ length: GS.gridSize }, () =>
 
 const DOM_grid: HTMLElement | null = document.getElementById("grid");
 
-if (DOM_grid) {
+
+if (DOM_grid)
+{
+DOM_grid.style.height =  GS.windowSize +"px"
+
   DOM_grid.style.gridTemplateColumns = `repeat(${GS.gridSize}, 0fr)`;
   DOM_grid.style.gridTemplateRows = `repeat(${GS.gridSize}, 0fr)`;
 }
