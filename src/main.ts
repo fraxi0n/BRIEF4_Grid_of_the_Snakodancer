@@ -1,63 +1,116 @@
 import { update } from "./update.js";
 import { updateDOM } from "./draw.js";
-import { audio, GS } from "./load.js";
+import { audio, createBomb, GS } from "./load.js";
 
-type Direction = "left" | "right" | "up" | "down" |"stopped";
+type Direction = "left" | "right" | "up" | "down" | "stopped";
 
 let sDir: Direction = "stopped";
-let tempoFailed = false
-// const moveHistory: Direction[] = ["left"]; // todo
 
-const stopMoving = () => {
-  sDir="stopped"
+let sDerDir: Direction | null = null;
+
+const setDir = (pDirection: Direction) => {
+  sDir = pDirection;
+  if (pDirection !== "stopped") {
+    sDerDir = pDirection;
+  }
 };
 
-function changeDir(t: KeyboardEvent) {
+class Tempo {
+  isActive: boolean = true;
+  isTooSoon: boolean = false;
+  private isTooLate: boolean = true;
+  countFail = 0;
+
+  get_isTooLate() {
+    return this.isTooLate;
+  }
+
+  set_isTooLate(pIsTooLate: boolean) {
+    if (pIsTooLate == true && this.isTooLate == false) {
+      createBomb();
+    }
+    this.isTooLate = pIsTooLate;
+  }
+}
+
+const tempo = new Tempo();
+
+// export let tempo.activeFailed = false;
+// const moveHistory: Direction[] = ["left"]; // todo
+
+const stopMoving = (isFailed: boolean) => {
+  console.log("stop " + isFailed);
+  if (isFailed) {
+    tempo.countFail++;
+    if (tempo.countFail >= GS.countFailBomb) {
+      createBomb();
+      // tempo.countFail=0
+    }
+  }
+  setDir("stopped");
+};
+
+function toucheDir(t: KeyboardEvent) {
+  console.log(tempo);
+
   if (t.code !== "F12") {
     t.preventDefault();
   }
 
-  if (isTempo && !tempoFailed) {
+  if (!releaseKeyCheck) {
+    if (tempo.isActive && !tempo.isTooSoon) {
+      if (t.code == "ArrowUp") {
+        sDerDir == "down" ? stopMoving(true) : setDir("up");
+      }
+      if (t.code == "ArrowDown") {
+        sDerDir == "up" ? stopMoving(true) : setDir("down");
+      }
+      if (t.code == "ArrowLeft") {
+        sDerDir == "right" ? stopMoving(true) : setDir("left");
+      }
+      if (t.code == "ArrowRight") {
+        sDerDir == "left" ? stopMoving(true) : setDir("right");
+      }
+    } else {
+      stopMoving(!tempo.isTooSoon);
+      tempo.isTooSoon = true;
+    }
+    if (!GS.run) {
+      runGame();
+    }
 
-    if (t.code == "ArrowUp") {
-      sDir == "down" ? stopMoving() : (sDir = "up");
-    }
-    if (t.code == "ArrowDown") {
-      sDir == "up" ? stopMoving() : (sDir = "down");
-    }
-    if (t.code == "ArrowLeft") {
-      sDir == "right" ? stopMoving() : (sDir = "left");
-    }
-    if (t.code == "ArrowRight") {
-      sDir == "left" ? stopMoving() : (sDir = "right");
-    }
-  } else {
-    stopMoving();
-    tempoFailed = true 
-  }
-  if (!GS.run) {
-    runGame();
+    releaseKeyCheck = t.code;
   }
 }
-document.addEventListener("keydown", changeDir);
+let releaseKeyCheck: string | false = false;
+document.addEventListener("keydown", toucheDir);
+document.addEventListener("keyup", (t: KeyboardEvent) => {
+  if (t.code == releaseKeyCheck) {
+    releaseKeyCheck = false;
+  }
+});
 
 let dt: number;
 let time = Date.now();
-
-let isTempo = false;
-
 let sTimer = 0;
 const sTimerInc = (incValue: number) => {
   sTimer += incValue;
 
   if (sTimer > GS.speedSnake * (1 - GS.tempoSnake)) {
-    isTempo = true;
+    tempo.isActive = true;
   }
 
   if (sTimer > GS.speedSnake) {
     sTimer = sTimer % GS.speedSnake;
-    isTempo = false;
-    tempoFailed=false
+    tempo.isActive = false;
+    tempo.isTooSoon = false;
+
+    if (sDir === "stopped") {
+      tempo.set_isTooLate(true);
+    } else {
+      tempo.set_isTooLate(false);
+    }
+
     return true;
   }
   return false;
@@ -83,10 +136,9 @@ function loop() {
   dt = now - time;
 
   update(dt);
-  updateDOM(sTimer, isTempo);
-
+  updateDOM(sTimer, tempo.isActive);
   time = now;
   requestAnimationFrame(loop);
 }
 
-export { sTimerInc, sDir , stopMoving };
+export { sTimerInc, sDir, stopMoving, tempo };
