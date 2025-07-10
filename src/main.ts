@@ -6,7 +6,7 @@ type Direction = "left" | "right" | "up" | "down" | "stopped";
 
 let sDir: Direction = "stopped";
 
-let sDerDir: Direction | null = null;
+let sDerDir: Direction = "left";
 
 const setDir = (pDirection: Direction) => {
   sDir = pDirection;
@@ -20,6 +20,7 @@ class Tempo {
   isTooSoon: boolean = false;
   private isTooLate: boolean = true;
   countFail = 0;
+  countAll = 0
 
   get_isTooLate() {
     return this.isTooLate;
@@ -39,12 +40,10 @@ const tempo = new Tempo();
 // const moveHistory: Direction[] = ["left"]; // todo
 
 const stopMoving = (isFailed: boolean) => {
-  console.log("stop " + isFailed);
   if (isFailed) {
     tempo.countFail++;
     if (tempo.countFail >= GS.countFailBomb) {
       createBomb();
-      // tempo.countFail=0
     }
   }
   setDir("stopped");
@@ -97,6 +96,8 @@ const sTimerInc = (incValue: number) => {
   sTimer += incValue;
 
   if (sTimer > GS.speedSnake * (1 - GS.tempoSnake)) {
+    !tempo.isActive&&tempo.countAll ++
+
     tempo.isActive = true;
   }
 
@@ -141,4 +142,4 @@ function loop() {
   requestAnimationFrame(loop);
 }
 
-export { sTimerInc, sDir, stopMoving, tempo };
+export { sTimerInc, sDir,sDerDir, stopMoving, tempo , Direction};

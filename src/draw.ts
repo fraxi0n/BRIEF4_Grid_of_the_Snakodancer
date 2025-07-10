@@ -1,4 +1,5 @@
 import { GS, DOM_grid, snake, modifyGrid, map } from "./load.js";
+import { Direction, sDerDir, sDir, tempo } from "./main.js";
 
 const nbBarTempo = 3;
 
@@ -17,7 +18,7 @@ DOM_badTempo.forEach((div) => {
   div.style = `height: ${(1 - GS.tempoSnake / nbBarTempo) * 100}%`;
 });
 
-const cellsW = GS.windowSize /GS.gridSize 
+const cellsW = GS.windowSize / GS.gridSize;
 
 const fillGrid: (i: number, j: number, cell: number) => void = (
   i: number,
@@ -27,8 +28,8 @@ const fillGrid: (i: number, j: number, cell: number) => void = (
   const newCell: HTMLElement = document.createElement("div");
   newCell.id = `l${i}_c${j}`;
   newCell.classList.add("cell");
-  newCell.style.height = cellsW+"px"
-  newCell.style.width = cellsW+"px"
+  newCell.style.height = cellsW + "px";
+  newCell.style.width = cellsW + "px";
 
   DOM_grid?.appendChild(newCell);
 };
@@ -95,6 +96,25 @@ if (DOM_tempoUp && DOM_tempoDown) {
   alert("error dom ");
 }
 
+const rotateSprite: (dir: Direction) => string = (dir) => {
+  let degreeReturned = "";
+
+  if (dir === "up") {
+    degreeReturned = "0";
+  }
+  if (dir === "right") {
+    degreeReturned = "90";
+  }
+  if (dir === "down") {
+    degreeReturned = "180";
+  }
+  if (dir === "left") {
+    degreeReturned = "270";
+  }
+
+  return "rotateZ(" + degreeReturned + "deg)";
+};
+
 export const updateDOM = (sTimer: number, isTempo: boolean) => {
   tempoBars.forEach((element) => {
     element.updatePos(sTimer);
@@ -124,22 +144,37 @@ export const updateDOM = (sTimer: number, isTempo: boolean) => {
           }
         } else if (map[line][column] === snake.lg) {
           const tete: HTMLImageElement = document.createElement("img");
-          tete.src = "img/snakesprites/png/snake_1.png";
-          tete.classList.add("cell");
-          if (!isTempo) {
-            tete.style.width = "25px";
-            tete.style.height = "25px";
+
+          if (isTempo) {
+            tete.src =
+              "img/snakesprites/png/s_"+(tempo.countAll % 2)+"_head_tong.png";
+          } else {
+            tete.src =
+              "img/snakesprites/png/s_" +
+              (tempo.countAll % 2) +
+              "_head.png";
           }
 
+          tete.style.width = cellsW + "px";
+          tete.style.transform = rotateSprite(sDerDir);
+
           cell?.appendChild(tete);
-        } else if (map[line][column] > 0) {
+        } else if (map[line][column] > 1) {
           const queue: HTMLImageElement = document.createElement("img");
-          queue.src = "img/snakesprites/png/corps.png";
-          queue.classList.add("cell");
-          if (!isTempo) {
-            queue.style.width = "25px";
-            queue.style.height = "25px";
-          }
+          queue.src = "img/snakesprites/png/s_"+(tempo.countAll % 2)+"_body.png";
+          // queue.classList.add("cell");
+
+          queue.style.width = cellsW + "px";
+          queue.style.transform = rotateSprite(sDerDir);
+          cell?.appendChild(queue);
+        }
+        else if (map[line][column] == 1) {
+          const queue: HTMLImageElement = document.createElement("img");
+          queue.src = "img/snakesprites/png/s_"+(tempo.countAll % 2)+"_tail.png";
+          // queue.classList.add("cell");
+
+          queue.style.width = cellsW + "px";
+          queue.style.transform = rotateSprite(sDerDir);
           cell?.appendChild(queue);
         }
       }

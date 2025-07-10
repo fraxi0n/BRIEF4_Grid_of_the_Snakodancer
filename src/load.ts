@@ -17,7 +17,7 @@ const GS = {
   isAppleRespawn: true,
 
   speedSnake: 1000 / (gameStatBPM / 60),
-  tempoSnake: 0.66, // 0.1-> 1
+  tempoSnake: 0.2, // 0.1-> 1
 
   isOutTempoBomb: true,
 
