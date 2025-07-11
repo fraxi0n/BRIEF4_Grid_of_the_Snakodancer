@@ -24,7 +24,16 @@ const bpm : number [] = [115, 130, 150]
 // BPM strictement typé
 function parseBPM(value: string | null, defaultValue: BPM): BPM {
   const n = parseInt(value ?? '', 10);
-  return bpm.includes(n) ? (n as BPM) : defaultValue;
+  
+  if (bpm.includes(n))
+  {
+    return n as BPM
+
+  }
+  else 
+    return defaultValue
+
+  // return bpm.includes(n) ? (n as BPM) : defaultValue;
 }
 
 const gameStatBPM: BPM = parseBPM(urlParams.get('bpm'), 115);
