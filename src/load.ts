@@ -20,10 +20,11 @@ function parseNumberInRange(
   return !isNaN(n) && n >= min && n <= max ? n : defaultValue;
 }
 
+const bpm : number [] = [115, 130, 150]
 // BPM strictement typé
 function parseBPM(value: string | null, defaultValue: BPM): BPM {
   const n = parseInt(value ?? '', 10);
-  return [115, 130, 150].includes(n) ? (n as BPM) : defaultValue;
+  return bpm.includes(n) ? (n as BPM) : defaultValue;
 }
 
 const gameStatBPM: BPM = parseBPM(urlParams.get('bpm'), 115);
@@ -38,18 +39,18 @@ const GS = {
   isGOD: false, // non modifiable
 
   isWallKilling: parseBool(urlParams.get('isWallKilling'), false),
-  gridSize: parseNumberInRange(urlParams.get('gridSize'), 5, 20, 9),
+  gridSize: parseNumberInRange(urlParams.get('gridSize'), 5, 20, 8),
 
   nbApple: parseNumberInRange(urlParams.get('nbApple'), 1, 10, 5),
   isAppleRespawn: parseBool(urlParams.get('isAppleRespawn'), true),
 
   speedSnake: 1000 / (gameStatBPM / 60),
 
-  tempoSnake: parseNumberInRange(urlParams.get('tempoSnake'), 0.1, 1, 0.2),
+  tempoSnake: parseNumberInRange(urlParams.get('tempoSnake'), 0.1, 1, 0.25),
   isOutTempoBomb: parseBool(urlParams.get('isOutTempoBomb'), true),
 
   // valeurs non modifiables
-  snakeLg: 20,
+  snakeLg: 2,
   snakeOX: 9,
   snakeOY: 2,
   isTempoRequired: true,
