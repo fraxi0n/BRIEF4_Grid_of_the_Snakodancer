@@ -25,7 +25,7 @@ const bpm : number [] = [115, 130, 150]
 function parseBPM(value: string | null, defaultValue: BPM): BPM {
   const n = parseInt(value ?? '', 10);
   
-  if (bpm.includes(n))
+  if (n === 115 || n===130|| n===150)
   {
     return n as BPM
 
