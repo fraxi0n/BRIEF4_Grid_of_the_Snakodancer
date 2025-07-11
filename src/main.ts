@@ -7,11 +7,14 @@ type Direction = "left" | "right" | "up" | "down" | "stopped";
 let sDir: Direction = "stopped";
 
 let sDerDir: Direction = "left";
+const sHistoryDir : Direction[] = ["left"]
 
 const setDir = (pDirection: Direction) => {
   sDir = pDirection;
   if (pDirection !== "stopped") {
     sDerDir = pDirection;
+    sHistoryDir.push(sDerDir)
+    // console.log (sHistoryDir , sDerDir  , sDir)
   }
 };
 
@@ -50,7 +53,6 @@ const stopMoving = (isFailed: boolean) => {
 };
 
 function toucheDir(t: KeyboardEvent) {
-  console.log(tempo);
 
   if (t.code !== "F12") {
     t.preventDefault();
@@ -142,4 +144,4 @@ function loop() {
   requestAnimationFrame(loop);
 }
 
-export { sTimerInc, sDir,sDerDir, stopMoving, tempo , Direction};
+export { sTimerInc,  stopMoving, tempo ,sHistoryDir,sDir,sDerDir, Direction};

@@ -1,37 +1,66 @@
 type BPM = 115 | 130 | 150;
-const gameStatBPM: BPM = 115; // séparer pour le typage et le calcul
+
+const urlParams = new URLSearchParams(window.location.search);
+
+// Fonction d'aide pour parser booléens
+function parseBool(value: string | null, defaultValue: boolean): boolean {
+  if (value === null) return defaultValue;
+  return value === 'true';
+}
+
+
+// Fonction d’aide pour parser des nombres avec contraintes
+function parseNumberInRange(
+  value: string | null,
+  min: number,
+  max: number,
+  defaultValue: number
+): number {
+  const n = parseFloat(value ?? '');
+  return !isNaN(n) && n >= min && n <= max ? n : defaultValue;
+}
+
+// BPM strictement typé
+function parseBPM(value: string | null, defaultValue: BPM): BPM {
+  const n = parseInt(value ?? '', 10);
+  return [115, 130, 150].includes(n) ? (n as BPM) : defaultValue;
+}
+
+const gameStatBPM: BPM = parseBPM(urlParams.get('bpm'), 115);
 
 const GS = {
-  //GAME STATS
+  // GAME STATS
+  windowSize: window.innerHeight - 10,
 
-  windowSize: window.innerHeight - 10, //todo
-  soundOn: true,
+  soundOn: parseBool(urlParams.get('soundOn'), true),
   bpm: gameStatBPM,
 
-  isGOD: false, // todo real death screen
+  isGOD: false, // non modifiable
 
-  isWallKilling: false,
-  gridSize: 9,
+  isWallKilling: parseBool(urlParams.get('isWallKilling'), false),
+  gridSize: parseNumberInRange(urlParams.get('gridSize'), 5, 20, 9),
 
-  nbApple: 5,
-  isAppleRespawn: true,
+  nbApple: parseNumberInRange(urlParams.get('nbApple'), 1, 10, 5),
+  isAppleRespawn: parseBool(urlParams.get('isAppleRespawn'), true),
 
   speedSnake: 1000 / (gameStatBPM / 60),
-  tempoSnake: 0.2, // 0.1-> 1
 
-  isOutTempoBomb: true,
+  tempoSnake: parseNumberInRange(urlParams.get('tempoSnake'), 0.1, 1, 0.2),
+  isOutTempoBomb: parseBool(urlParams.get('isOutTempoBomb'), true),
 
-  //valeur de départ peu d'importance
-  snakeLg: 2,
-  snakeOX: 9, //not use
-  snakeOY: 2, // not use
-  isTempoRequired: true, // pas changer
-  countFailBomb: 3, // pas changerou 2 ou 4
+  // valeurs non modifiables
+  snakeLg: 20,
+  snakeOX: 9,
+  snakeOY: 2,
+  isTempoRequired: true,
+  countFailBomb: 3,
 
-  moveHistory: false, // todo pas prio
-
-  run: false, // true = run des le launch
+  moveHistory: false,
+  run: false,
 };
+
+console.log(GS)
+
 
 export const audio = {
   115: new Audio("../music/115.mp3"),
@@ -78,7 +107,6 @@ const createBomb = () => {
 
   do {
     securityCount++;
-    console.log(securityCount);
     bomb.x = Math.floor(Math.random() * GS.gridSize);
     bomb.y = Math.floor(Math.random() * GS.gridSize);
   } while (map[bomb.x][bomb.y] !== 0 && securityCount < 1000);

@@ -1,32 +1,153 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8" />
-    <title>Grid of the Snakodancer</title>
-    <link rel="stylesheet" href="style.css" />
-    <!-- <script href="dist/main.js" ></script> -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mon Jeu - Accueil</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+    }
+
+    .overlay {
+      background: rgba(0, 0, 0, 0.6);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    form {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 500px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: none;
+      margin-top: 0.5rem;
+    }
+
+    .form-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    button {
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      background-color: #28a745;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
 </head>
 <body>
+  <div class="overlay">
+    <h1>Mon Jeu Snake+Rythme</h1>
+    <img src="artwork.png" alt="Artwork du jeu" style="max-width: 100%; height: auto; margin-bottom: 2rem;" />
 
-    <div class="daddy">
-    <div class="tempo">
-        <div class="half-tempo" id= "tempo-up">
-        <div class="bad-tempo top-tempo " id="bad-tempo-top"></div>
-        <div class="good-tempo bottom-tempo" id="good-tempo-top"></div>
+    <form id="gameForm">
+      <label>
+        Son :
+        <div class="form-checkbox">
+          <input type="checkbox" id="soundOn" checked />
+          <span>Activer le son</span>
         </div>
+      </label>
 
-        <div class="half-tempo"  id= "tempo-down">
-        <div class="good-tempo top-tempo" id="bad-tempo-top"></div>
-        <div class="bad-tempo bottom-tempo" id="bad-tempo-bottom"></div>
+      <label for="bpm">BPM :</label>
+      <select id="bpm">
+        <option value="115">115</option>
+        <option value="130">130</option>
+        <option value="150">150</option>
+      </select>
+
+      <label for="gridSize">Taille de la grille :</label>
+      <input type="number" id="gridSize" min="5" max="20" value="9" />
+
+      <label>
+        <div class="form-checkbox">
+          <input type="checkbox" id="isWallKilling" />
+          <span>Mur mortel</span>
         </div>
-    </div>
+      </label>
 
-    <div id="grid"></div>
-    </div>
+      <label for="nbApple">Nombre de pommes :</label>
+      <input type="number" id="nbApple" min="1" max="10" value="5" />
 
-    <script src="./dist/load.js" type="module"></script>
-    <script src="./dist/update.js" type="module"></script>
-    <script src="./dist/draw.js" type="module"></script>
-    <script src="./dist/main.js" type="module"></script>
+      <label>
+        <div class="form-checkbox">
+          <input type="checkbox" id="isAppleRespawn" checked />
+          <span>Les pommes réapparaissent</span>
+        </div>
+      </label>
+
+      <label for="tempoSnake">Tempo du serpent (0.1 à 1) :</label>
+      <input type="number" id="tempoSnake" min="0.1" max="1" step="0.1" value="0.9" />
+
+      <label>
+        <div class="form-checkbox">
+          <input type="checkbox" id="isOutTempoBomb" checked />
+          <span>Bombes hors tempo activées</span>
+        </div>
+      </label>
+
+      <button type="submit">Lancer le jeu</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('gameForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const params = new URLSearchParams({
+        soundOn: document.getElementById('soundOn').checked,
+        bpm: document.getElementById('bpm').value,
+        gridSize: document.getElementById('gridSize').value,
+        isWallKilling: document.getElementById('isWallKilling').checked,
+        nbApple: document.getElementById('nbApple').value,
+        isAppleRespawn: document.getElementById('isAppleRespawn').checked,
+        tempoSnake: document.getElementById('tempoSnake').value,
+        isOutTempoBomb: document.getElementById('isOutTempoBomb').checked,
+      });
+
+      window.location.href = `game.html?${params.toString()}`;
+    });
+  </script>
 </body>
 </html>

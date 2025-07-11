@@ -1,5 +1,5 @@
 import { GS, DOM_grid, snake, modifyGrid, map } from "./load.js";
-import { Direction, sDerDir, sDir, tempo } from "./main.js";
+import { Direction, sDerDir, sDir, sHistoryDir, tempo } from "./main.js";
 
 const nbBarTempo = 3;
 
@@ -114,6 +114,58 @@ const rotateSprite: (dir: Direction) => string = (dir) => {
 
   return "rotateZ(" + degreeReturned + "deg)";
 };
+let styleSnake: number[] = [];
+
+export const getStyleBody = () => {
+  let tete: Direction = sHistoryDir[sHistoryDir.length - 1];
+  let queue: Direction = sHistoryDir[sHistoryDir.length - 2];
+  let styleCase = 0;
+
+  if (tete == queue) {
+    if (tete == "up" || tete == "down") {
+      styleCase = 1; // droit pas de rota
+    } else {
+      styleCase = 2; // droit rota 90
+    }
+  } else {
+    // console.log(line , column ,  map[line][column] , sHistoryDir);
+
+    if (queue == "down" && tete == "left") {
+      styleCase = 3;
+    }
+    if (queue == "right" && tete == "up") {
+      styleCase = 3;
+    }
+
+    //90
+
+    if (queue == "down" && tete == "right") {
+      styleCase = 4;
+    }
+    if (queue == "left" && tete == "up") {
+      styleCase = 4;
+    }
+
+    // 180
+    if (queue == "up" && tete == "right") {
+      styleCase = 5;
+    }
+    if (queue == "left" && tete == "down") {
+      styleCase = 5;
+    }
+
+    // 270
+    if (queue == "right" && tete == "down") {
+      styleCase = 6;
+    }
+    if (queue == "up" && tete == "left") {
+      styleCase = 6;
+    }
+  }
+  styleSnake[snake.y * 10 + snake.x] = styleCase;
+};
+
+// export const getStyle
 
 export const updateDOM = (sTimer: number, isTempo: boolean) => {
   tempoBars.forEach((element) => {
@@ -147,34 +199,98 @@ export const updateDOM = (sTimer: number, isTempo: boolean) => {
 
           if (isTempo) {
             tete.src =
-              "img/snakesprites/png/s_"+(tempo.countAll % 2)+"_head_tong.png";
-          } else {
-            tete.src =
               "img/snakesprites/png/s_" +
               (tempo.countAll % 2) +
-              "_head.png";
+              "_head_tong.png";
+          } else {
+            tete.src =
+              "img/snakesprites/png/s_" + (tempo.countAll % 2) + "_head.png";
           }
 
           tete.style.width = cellsW + "px";
-          tete.style.transform = rotateSprite(sDerDir);
+
+
+            // let tete: Direction = sHistoryDir[sHistoryDir.length - 1];
+
+           tete.style.transform = rotateSprite(sDerDir);
 
           cell?.appendChild(tete);
         } else if (map[line][column] > 1) {
+          const sBody: HTMLImageElement = document.createElement("img");
+
+          let front: Direction =
+            sHistoryDir[sHistoryDir.length - (map[line][column] - 1)];
+
+          let back: Direction =
+            sHistoryDir[sHistoryDir.length - (map[line][column] - 2)];
+
+          switch (styleSnake[line * 10 + column]) {
+            case 1:
+              sBody.src =
+                "img/snakesprites/png/s_" + (tempo.countAll % 2) + "_body.png";
+
+              // traitement pour 1
+              break;
+            case 2:
+              sBody.src =
+                "img/snakesprites/png/s_" + (tempo.countAll % 2) + "_body.png";
+              sBody.style.transform = "rotateZ(90deg)";
+
+              // traitement pour 2
+              break;
+            case 3:
+              sBody.src =
+                "img/snakesprites/png/s_" +
+                (tempo.countAll % 2) +
+                "_body_corner.png";
+
+              // traitement pour 3
+              break;
+            case 4:
+              // traitement pour 4
+              sBody.src =
+                "img/snakesprites/png/s_" +
+                (tempo.countAll % 2) +
+                "_body_corner.png";
+              sBody.style.transform = "rotateZ(90deg)";
+
+              break;
+            case 5:
+              // traitement pour 5
+              sBody.src =
+                "img/snakesprites/png/s_" +
+                (tempo.countAll % 2) +
+                "_body_corner.png";
+              sBody.style.transform = "rotateZ(180deg)";
+
+              break;
+            case 6:
+              // traitement pour 6
+              sBody.src =
+                "img/snakesprites/png/s_" +
+                (tempo.countAll % 2) +
+                "_body_corner.png";
+              sBody.style.transform = "rotateZ(270deg)";
+
+              break;
+            default:
+              throw new Error(
+                `Valeur inattendue : ${styleSnake[line * 10 + column]}`
+              );
+          }
+
+          sBody.style.width = cellsW + "px";
+
+          cell?.appendChild(sBody);
+        } else if (map[line][column] == 1) {
           const queue: HTMLImageElement = document.createElement("img");
-          queue.src = "img/snakesprites/png/s_"+(tempo.countAll % 2)+"_body.png";
+          queue.src =
+            "img/snakesprites/png/s_" + (tempo.countAll % 2) + "_tail.png";
           // queue.classList.add("cell");
 
           queue.style.width = cellsW + "px";
-          queue.style.transform = rotateSprite(sDerDir);
-          cell?.appendChild(queue);
-        }
-        else if (map[line][column] == 1) {
-          const queue: HTMLImageElement = document.createElement("img");
-          queue.src = "img/snakesprites/png/s_"+(tempo.countAll % 2)+"_tail.png";
-          // queue.classList.add("cell");
-
-          queue.style.width = cellsW + "px";
-          queue.style.transform = rotateSprite(sDerDir);
+          queue.style.transform = rotateSprite(sHistoryDir[snake.lg - 2]);
+          // console.log (sHistoryDir[snake.lg])
           cell?.appendChild(queue);
         }
       }
