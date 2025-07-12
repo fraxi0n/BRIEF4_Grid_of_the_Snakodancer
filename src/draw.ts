@@ -27,7 +27,7 @@ const fillGrid: (i: number, j: number, cell: number) => void = (
 ) => {
   const newCell: HTMLElement = document.createElement("div");
   newCell.id = `l${i}_c${j}`;
-  newCell.classList.add("cell");
+  newCell.classList.add("cell", "cell-"+((i+j)%2) );
   newCell.style.height = cellsW + "px";
   newCell.style.width = cellsW + "px";
 
@@ -185,13 +185,12 @@ export const updateDOM = (sTimer: number, isTempo: boolean) => {
         if (map[line][column] < 0) {
           if (map[line][column] === -1) {
             const apple: HTMLImageElement = document.createElement("img");
-            apple.src = "img/snakesprites/png/apple.png";
-            apple.classList.add("cell");
+            apple.src = "img/snakesprites/png/apple_32.gif";
+            apple.style.width = cellsW + "px";
             cell?.appendChild(apple);
           } else {
             const bomb: HTMLImageElement = document.createElement("img");
             bomb.src = "img/snakesprites/png/bomb_64.png";
-            bomb.classList.add("cell");
             cell?.appendChild(bomb);
           }
         } else if (map[line][column] === snake.lg) {
@@ -208,11 +207,7 @@ export const updateDOM = (sTimer: number, isTempo: boolean) => {
           }
 
           tete.style.width = cellsW + "px";
-
-
-            // let tete: Direction = sHistoryDir[sHistoryDir.length - 1];
-
-           tete.style.transform = rotateSprite(sDerDir);
+          tete.style.transform = rotateSprite(sDerDir);
 
           cell?.appendChild(tete);
         } else if (map[line][column] > 1) {
@@ -229,14 +224,12 @@ export const updateDOM = (sTimer: number, isTempo: boolean) => {
               sBody.src =
                 "img/snakesprites/png/s_" + (tempo.countAll % 2) + "_body.png";
 
-              // traitement pour 1
               break;
             case 2:
               sBody.src =
                 "img/snakesprites/png/s_" + (tempo.countAll % 2) + "_body.png";
               sBody.style.transform = "rotateZ(90deg)";
 
-              // traitement pour 2
               break;
             case 3:
               sBody.src =
@@ -244,10 +237,8 @@ export const updateDOM = (sTimer: number, isTempo: boolean) => {
                 (tempo.countAll % 2) +
                 "_body_corner.png";
 
-              // traitement pour 3
               break;
             case 4:
-              // traitement pour 4
               sBody.src =
                 "img/snakesprites/png/s_" +
                 (tempo.countAll % 2) +
@@ -256,7 +247,6 @@ export const updateDOM = (sTimer: number, isTempo: boolean) => {
 
               break;
             case 5:
-              // traitement pour 5
               sBody.src =
                 "img/snakesprites/png/s_" +
                 (tempo.countAll % 2) +
@@ -265,7 +255,6 @@ export const updateDOM = (sTimer: number, isTempo: boolean) => {
 
               break;
             case 6:
-              // traitement pour 6
               sBody.src =
                 "img/snakesprites/png/s_" +
                 (tempo.countAll % 2) +
@@ -280,17 +269,15 @@ export const updateDOM = (sTimer: number, isTempo: boolean) => {
           }
 
           sBody.style.width = cellsW + "px";
-
           cell?.appendChild(sBody);
         } else if (map[line][column] == 1) {
           const queue: HTMLImageElement = document.createElement("img");
           queue.src =
             "img/snakesprites/png/s_" + (tempo.countAll % 2) + "_tail.png";
-          // queue.classList.add("cell");
-
           queue.style.width = cellsW + "px";
-          queue.style.transform = rotateSprite(sHistoryDir[snake.lg - 2]);
-          // console.log (sHistoryDir[snake.lg])
+          queue.style.transform = rotateSprite(
+            sHistoryDir[sHistoryDir.length - snake.lg + 1]
+          );
           cell?.appendChild(queue);
         }
       }
