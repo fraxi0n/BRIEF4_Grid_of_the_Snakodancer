@@ -135,8 +135,8 @@ for (let i = 1; i <= GS.nbApple; i++) {
 const gameOver = () => {
   if (!GS.isGOD) {
     audio[GS.bpm].pause();
-
-    alert("GAME OVER press F5");
+    window.location.href = "gameover.html";
+    // alert("GAME OVER press F5");
   }
 };
 

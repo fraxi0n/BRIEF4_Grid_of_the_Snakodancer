@@ -1,7 +1,27 @@
 import { GS, DOM_grid, snake, modifyGrid, map } from "./load.js";
-import { Direction, sDerDir, sDir, sHistoryDir, tempo } from "./main.js";
+import { Direction, sHistoryDir, tempo } from "./main.js";
 
-const nbBarTempo = 3;
+let nbBarTempo = 3;
+
+if (GS.tempoSnake<=0.2)
+{
+  nbBarTempo=2
+}
+if (GS.tempoSnake>=0.7)
+{
+  nbBarTempo=5
+}
+
+const DOM_daddy : HTMLElement | null = document.getElementById("daddy");
+
+
+if (DOM_daddy)
+{
+DOM_daddy.style.height = GS.windowSize+"px"
+
+
+}
+
 
 const DOM_goodTempo: HTMLElement[] = [
   ...document.getElementsByClassName("good-tempo"),
@@ -41,10 +61,16 @@ tete.src = "img/snakesprites/png/snake_1.png";
 
 document.getElementById(`l1_c3`)?.appendChild(tete);
 
-const DOM_tempoUp: HTMLElement | null = document.getElementById("tempo-up");
-const DOM_tempoDown: HTMLElement | null = document.getElementById("tempo-down");
+// const DOM_tempoUp: HTMLElement | null = document.getElementById("tempo-up");
+// const DOM_tempoDown: HTMLElement | null = document.getElementById("tempo-down");
 
-const tempoBars: TempoBar[] = [];
+const DOM_tempoUp: NodeListOf<Element>  = document.querySelectorAll(".tempo-up");
+const DOM_tempoDown: NodeListOf<Element> = document.querySelectorAll(".tempo-down");
+
+
+// const tempoBars: TempoBar[] = [];
+const tempoBars: TempoBar[][] = [[],[]];
+
 
 class TempoBar {
   posOY: number;
@@ -81,18 +107,28 @@ class TempoBar {
   }
 }
 
-if (DOM_tempoUp && DOM_tempoDown) {
+if (DOM_tempoUp[0] && DOM_tempoDown[0] && DOM_tempoUp[1] && DOM_tempoDown[1]) {
+  for(let i2 = 0 ; i2<2 ; i2++ )
+  {
   for (let i = 0; i < nbBarTempo; i++) {
-    tempoBars.push(
-      new TempoBar(true, 0 + (i * (GS.windowSize / 2)) / nbBarTempo)
-    );
-    DOM_tempoUp.appendChild(tempoBars[i * 2].DOM);
-    tempoBars.push(
-      new TempoBar(false, 0 + (i * (GS.windowSize / 2)) / nbBarTempo)
-    );
-    DOM_tempoDown.appendChild(tempoBars[i * 2 + 1].DOM);
+    
+
+      tempoBars[i2].push(
+        new TempoBar(true, 0 + (i * (GS.windowSize / 2)) / nbBarTempo)
+      );
+      DOM_tempoUp[i2].appendChild(tempoBars[i2][i * 2].DOM);
+      // DOM_tempoUp[1].appendChild(tempoBars[i * 2].DOM);
+      
+      tempoBars[i2].push(
+        new TempoBar(false, 0 + (i * (GS.windowSize / 2)) / nbBarTempo)
+      );
+      DOM_tempoDown[i2].appendChild(tempoBars[i2][i * 2 + 1].DOM);
+      // DOM_tempoDown[1].appendChild(tempoBars[i * 2 + 1].DOM);
+    }
+
   }
 } else {
+  console.log (DOM_tempoUp)
   alert("error dom ");
 }
 
@@ -168,8 +204,11 @@ export const getStyleBody = () => {
 // export const getStyle
 
 export const updateDOM = (sTimer: number, isTempo: boolean) => {
-  tempoBars.forEach((element) => {
-    element.updatePos(sTimer);
+  tempoBars[0].forEach((barre) => {
+    barre.updatePos(sTimer);
+  });
+    tempoBars[1].forEach((barre) => {
+    barre.updatePos(sTimer);
   });
 
   for (let line = 0; line < GS.gridSize; line++) {
@@ -186,7 +225,7 @@ export const updateDOM = (sTimer: number, isTempo: boolean) => {
           if (map[line][column] === -1) {
             const apple: HTMLImageElement = document.createElement("img");
             apple.src = "img/snakesprites/png/apple_32.gif";
-            apple.style.width = cellsW + "px";
+            apple.style.width =   cellsW *0.6 + "px";
             cell?.appendChild(apple);
           } else {
             const bomb: HTMLImageElement = document.createElement("img");
@@ -207,7 +246,7 @@ export const updateDOM = (sTimer: number, isTempo: boolean) => {
           }
 
           tete.style.width = cellsW + "px";
-          tete.style.transform = rotateSprite(sDerDir);
+          tete.style.transform = rotateSprite(sHistoryDir[sHistoryDir.length-1]);
 
           cell?.appendChild(tete);
         } else if (map[line][column] > 1) {

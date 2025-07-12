@@ -13,7 +13,6 @@ const setDir = (pDirection: Direction) => {
   sDir = pDirection;
   if (pDirection !== "stopped") {
     sDerDir = pDirection;
-    sHistoryDir.push(sDerDir)
     // console.log (sHistoryDir , sDerDir  , sDir)
   }
 };
@@ -44,7 +43,7 @@ const tempo = new Tempo();
 
 const stopMoving = (isFailed: boolean) => {
   if (isFailed) {
-    tempo.countFail++;
+    GS.isOutTempoBomb&&tempo.countFail++;
     if (tempo.countFail >= GS.countFailBomb) {
       createBomb();
     }
@@ -94,6 +93,7 @@ document.addEventListener("keyup", (t: KeyboardEvent) => {
 let dt: number;
 let time = Date.now();
 let sTimer = 0;
+
 const sTimerInc = (incValue: number) => {
   sTimer += incValue;
 
@@ -111,6 +111,8 @@ const sTimerInc = (incValue: number) => {
     if (sDir === "stopped") {
       tempo.set_isTooLate(true);
     } else {
+    sHistoryDir.push(sDir)
+
       tempo.set_isTooLate(false);
     }
 
