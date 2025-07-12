@@ -229,7 +229,9 @@ export const updateDOM = (sTimer: number, isTempo: boolean) => {
             cell?.appendChild(apple);
           } else {
             const bomb: HTMLImageElement = document.createElement("img");
-            bomb.src = "img/snakesprites/png/bomb_64.png";
+            bomb.src = "img/snakesprites/png/bomb.gif";
+            bomb.style.width =   cellsW *0.8 + "px";
+
             cell?.appendChild(bomb);
           }
         } else if (map[line][column] === snake.lg) {
