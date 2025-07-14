@@ -3,14 +3,97 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>gameOver</title>
-   
+  <title>Game Over</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Press Start 2P', monospace;
+      background: radial-gradient(circle, #000000 0%, #1a0033 100%);
+      color: #fff;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 24px;
+      color: #ff00ff;
+      text-shadow: 0 0 5px #f0f, 0 0 10px #f0f;
+      animation: flash 2s infinite;
+      margin-bottom: 30px;
+    }
+
+    .scoreboard {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid #00ffff;
+      border-radius: 12px;
+      padding: 20px 30px;
+      box-shadow: 0 0 20px #0ff;
+      margin-bottom: 30px;
+    }
+
+    .scoreboard p {
+      font-size: 14px;
+      margin: 10px 0;
+      color: #ffff00;
+      text-shadow: 0 0 5px #ff0;
+    }
+
+    a, #retry-button {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 20px;
+      background: #00ffff;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-size: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+      transition: transform 0.2s ease;
+    }
+
+    a:hover, #retry-button:hover {
+      transform: scale(1.05);
+    }
+
+    @keyframes flash {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+  </style>
 </head>
 <body>
 
-    <H1>GAME OVER </H1>
-    <a href="index.html"> retour menu </a>
+  <h1>🎵 GAME OVER 🎵</h1>
 
+  <div class="scoreboard">
+    <p id="display-time">Temps restant: --:--</p>
+    <p id="display-score">Score : ----</p>
+  </div>
+
+  <a href="index.html">⬅ Retour au menu</a>
+  <button id="retry-button">🔁 Rejouer avec les mêmes paramètres</button>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const score = params.get("score") || "N/A";
+    const time = params.get("timeLeft") || "--:--";
+
+    document.getElementById("display-time").textContent = "Temps : " + time;
+    document.getElementById("display-score").textContent = "Score : " + score;
+
+    document.getElementById("retry-button").addEventListener("click", () => {
+      window.location.href = "game.html" + window.location.search;
+    });
+  </script>
 
 </body>
 </html>

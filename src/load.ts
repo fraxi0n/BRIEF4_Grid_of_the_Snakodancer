@@ -67,6 +67,8 @@ const GS = {
 
   moveHistory: false,
   run: false,
+
+  timer:90
 };
 
 console.log(GS)
@@ -74,7 +76,7 @@ console.log(GS)
 
 export const audio = {
   100: new Audio("../music/Paris.mp3"),
-  110: new Audio("../music/Knock Knock.mp3"),
+  110: new Audio("../music/Knock Knock.flac"),
   115: new Audio("../music/115.mp3"),
   126: new Audio("../music/Hydrogen.flac"),
   130: new Audio("../music/130.mp3"),
@@ -138,7 +140,10 @@ for (let i = 1; i <= GS.nbApple; i++) {
 const gameOver = () => {
   if (!GS.isGOD) {
     audio[GS.bpm].pause();
-    window.location.href = "gameover.html";
+    const queryString = window.location.search;
+    const score = (snake.lg-2)*100
+    window.location.href = `gameOver.html?${urlParams}&score=${score}&timeLeft=${GS.timer}  `
+    // window.location.href = "gameOver?"+urlParams+".html";
     // alert("GAME OVER press F5");
   }
 };

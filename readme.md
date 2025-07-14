@@ -6,23 +6,23 @@ TODO
 prio
 
 
-écran de menu écran de calibrage -- to polish 
+écran de menu écran de calibrage -- to polish done
 
-ameliorer form 
-style 
-nom de variable
-glass morphisme 
+ameliorer form done
+style done
+nom de variable done 
+glass morphisme done 
 
 
-add title 
+add title done 
 
-regle du jeu 
+regle du jeu done 
+
+
 
 
 
 écran de arrow to start
-
-
 
 écran de game OVER
 

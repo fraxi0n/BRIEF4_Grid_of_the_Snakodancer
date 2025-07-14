@@ -1,6 +1,6 @@
 import { update } from "./update.js";
 import { updateDOM } from "./draw.js";
-import { audio, createBomb, GS } from "./load.js";
+import { audio, createBomb, gameOver, GS, snake } from "./load.js";
 
 type Direction = "left" | "right" | "up" | "down" | "stopped";
 
@@ -121,13 +121,44 @@ const sTimerInc = (incValue: number) => {
   return false;
 };
 
+
+const timeIsRunningOut = () =>{
+  setTimeout(timeIsRunningOut, 1000);
+  GS.timer--
+  if( DOM_timer)
+  {
+  DOM_timer.innerText = GS.timer+""
+  }
+  GS.timer==0&&gameOver()
+  
+
+}  
+const DOM_score : HTMLElement |null = document.getElementById("score")
+
+export const updateScore= () => {
+  const newScore =  (snake.lg-2)*100
+  if(DOM_score!==null)
+  {
+  DOM_score.innerText = newScore+""
+  }
+
+}
+
+const DOM_timer : HTMLElement |null = document.getElementById("time")
+
+
+
+// export let timer = 91
+
 const runGame = () => {
   GS.run = true;
   GS.soundOn && audio[GS.bpm].play();
 
-  audio[GS.bpm].currentTime = 10.71 % (115 / 60); //callage du rhytme sur la musique
+   audio[GS.bpm].currentTime = 10.71 % (GS.bpm / 60); //callage du rhytme sur la musique
 
   audio[GS.bpm].volume = 0.5;
+
+  timeIsRunningOut()
 
   requestAnimationFrame(loop);
 };

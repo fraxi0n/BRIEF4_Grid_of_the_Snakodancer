@@ -5,6 +5,7 @@
 
 }
 
+
 #daddy {
   display: flex;
   width: 100%;
@@ -14,10 +15,7 @@
 }
 
 #grid {
-  /* position: absolute; */
   right: 0;
-  /* width: 500px; */
-  /* height: 500px; */
   background-color: aliceblue;
   display: grid;
 }
@@ -26,9 +24,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* width: 32px; */
-  /* height: 32px; */
-  /* background-image: url(img/snakesprites/png/dalle_32_0.png); */
   background-size: contain;
   padding: auto;
 }
@@ -54,11 +49,10 @@
 }
 
 .good-tempo {
-  /* height: 40%; */
   position: absolute;
   bottom: 0;
 
-  width: 100%;
+  width: 50px;
   background-color: rgb(255, 252, 70);
 }
 
@@ -76,7 +70,6 @@
 
 .bad-tempo {
 
-  /* height: 60%; */
   width: 50px;
   background-color: rgb(66, 5, 180);
 }
@@ -84,9 +77,55 @@
 .tempo-bar {
   width: 50px;
   position: absolute;
-  /* x: 100px;
-  y: 1000px; */
+
   z-index: 3;
 }
 
 
+
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Press Start 2P', monospace;
+  background: #000;
+  color: #fff;
+}
+
+.left-modal {
+  height: 100vh;
+  background: linear-gradient(to bottom, #111, #222);
+  border-right: 2px solid #ff00ff;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+  font-size: larger;
+}
+
+.modal-header h2 {
+  text-align: center;
+  color: #00ffff;
+  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+  font-size: 16px;
+  animation: pulse 2s infinite;
+}
+p{
+  word-wrap: break-word;
+  max-width: 500px;
+}
+
+
+
+
+/* Disco pulse animation */
+@keyframes pulse {
+  0%, 100% {
+    text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+  }
+  50% {
+    text-shadow: 0 0 10px #f0f, 0 0 20px #f0f;
+  }
+}

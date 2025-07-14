@@ -56,13 +56,6 @@ const fillGrid: (i: number, j: number, cell: number) => void = (
 
 modifyGrid(fillGrid);
 
-const tete: HTMLImageElement = document.createElement("img");
-tete.src = "img/snakesprites/png/snake_1.png";
-
-document.getElementById(`l1_c3`)?.appendChild(tete);
-
-// const DOM_tempoUp: HTMLElement | null = document.getElementById("tempo-up");
-// const DOM_tempoDown: HTMLElement | null = document.getElementById("tempo-down");
 
 const DOM_tempoUp: NodeListOf<Element>  = document.querySelectorAll(".tempo-up");
 const DOM_tempoDown: NodeListOf<Element> = document.querySelectorAll(".tempo-down");

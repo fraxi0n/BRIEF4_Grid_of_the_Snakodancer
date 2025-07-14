@@ -3,6 +3,7 @@ import {
   sTimerInc,
   stopMoving,
   tempo,
+  updateScore,
 } from "./main.js";
 import { gameOver, map, modifyGrid, snake, createApple, GS } from "./load.js";
 import { getStyleBody } from "./draw.js";
@@ -24,6 +25,7 @@ export const update = (dt: number) => {
         if (map[snake.y][snake.x] === -1) {
           snake.lg++;
           score++;
+          updateScore()
           GS.isAppleRespawn && createApple();
         } else {
           modifyGrid((i: number, j: number, cell: number) => {
