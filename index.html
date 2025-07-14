@@ -3,50 +3,107 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>homepage GotSD</title>
+  <title>Grid of the Necrodancer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: url('background.jpg') no-repeat center center fixed;
+      background: url('img/snakesprites/png/home.png') no-repeat center center fixed;
       background-size: cover;
-      font-family: Arial, sans-serif;
+      font-family: 'Press Start 2P', Arial, sans-serif;
       color: white;
       text-align: center;
     }
 
     .overlay {
-      background: rgb(27, 1, 27);
-
-      background-image: url("img/snakesprites/png/home.png");
-      background-repeat: no-repeat;
-      background-position: center;
+      background: rgba(0, 0, 0, 0.75);
       min-height: 100vh;
+      padding: 2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 2rem;
+      justify-content: start;
     }
 
     h1 {
-      font-size: 4rem;
-      margin-bottom: 1rem;
+      font-size: 2.5rem;
+      margin: 1rem 0;
+      color: #ff00ff;
+      text-shadow: 2px 2px #000;
+    }
+
+    .intro {
+      max-width: 600px;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      background: rgba(0,0,0,0.5);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    .presets {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .preset-btn {
+      padding: 0.8rem 1rem;
+      font-size: 0.7rem;
+      background: #ff00cc;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: white;
+      box-shadow: 0 0 10px #ff00cc;
+      transition: 0.2s;
+    }
+
+    .preset-btn:hover {
+      background: #ff66d9;
     }
 
     form {
-      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.1);
       padding: 2rem;
-      border-radius: 12px;
+      border-radius: 20px;
+      max-width: 700px;
       width: 100%;
-      max-width: 500px;
       text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    }
+
+    .form-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: 20px;
+      flex-wrap: wrap;
+    }
+
+    .form-group {
+      flex: 1 1 45%;
     }
 
     label {
-      display: block;
-      margin-top: 1rem;
+      font-size: 0.75rem;
       font-weight: bold;
+      margin-bottom: 0.3rem;
+      display: block;
+    }
+
+    small {
+      display: block;
+      font-size: 0.6rem;
+      color: #ccc;
+      margin-top: 0.2rem;
     }
 
     input, select {
@@ -54,91 +111,183 @@
       padding: 0.5rem;
       border-radius: 6px;
       border: none;
-      margin-top: 0.5rem;
+      background: rgba(255,255,255,0.2);
+      color: #ff66d9;
+      font-size: larger;
+
+
+    }
+
+    input[type="checkbox"] {
+      width: auto;
     }
 
     .form-checkbox {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      margin-top: 0.5rem;
     }
 
-    button {
-      margin-top: 2rem;
+    button[type="submit"] {
+      margin-top: 1rem;
       padding: 1rem 2rem;
-      background-color: #28a745;
+      background-color: #00ffff;
       border: none;
-      color: white;
-      font-size: 1.2rem;
+      color: black;
+      font-size: 1rem;
       border-radius: 8px;
       cursor: pointer;
+      font-weight: bold;
+      text-shadow: 1px 1px #fff;
     }
 
-    button:hover {
-      background-color: #218838;
+    button[type="submit"]:hover {
+      background-color: #66ffff;
     }
   </style>
 </head>
 <body>
   <div class="overlay">
-    <h1></h1>
-    <!-- <img src="img/snakesprites/png/home.png" alt="Artwork du jeu" style="max-width: 100%; height: auto; margin-bottom: 2rem;" /> -->
+    <h1>Grid of the SnakoDancer</h1>
+
+    <p class="intro">
+      Utilise les flèches du clavier sur le beat pour avancer, <br>
+      le tempo est donné par les barre lattéral et quand le serpent sort sa langue.<br>
+      Ramasse le plus de dico-balls avant la fin du temps  <br>
+      Attention à rester en rhytme ou un crâne apparaitra !
+    </p>
+
+    <div class="presets">
+      <button type="button" class="preset-btn" onclick="applyPreset('easy')">Easy </button>
+      <button type="button" class="preset-btn" onclick="applyPreset('medium')">Normal</button>
+      <button type="button" class="preset-btn" onclick="applyPreset('hard')">Hard</button>
+    </div>
 
     <form id="gameForm">
-      <label>
-        Son :
-        <div class="form-checkbox">
-          <input type="checkbox" id="soundOn" checked />
-          <span>Activer le son</span>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="soundOn">Musique</label>
+          <div class="form-checkbox">
+            <input type="checkbox" id="soundOn" checked />
+            <span>Activer le son</span>
+          </div>
         </div>
-      </label>
 
-      <label for="bpm">BPM :</label>
-      <select id="bpm">
-        <option value="115">115</option>
-        <option value="130">130</option>
-        <option value="150">150</option>
-      </select>
-
-      <label for="gridSize">Taille de la grille :</label>
-      <input type="number" id="gridSize" min="5" max="20" value="9" />
-
-      <label>
-        <div class="form-checkbox">
-          <input type="checkbox" id="isWallKilling" />
-          <span>Mur mortel</span>
+        <div class="form-group">
+          <label for="bpm"></label>
+          <select id="bpm">
+            <option value="100">Paris M|O|O|N (100 BPM)</option>
+            <option value="110">Knock Knock Scattle (110 BPM)</option>
+            <option value="115" selected>Disco Descent (115 BPM)</option>
+            <option value="126" >Hydrogene M|O|O|N (126 BPM)</option>
+            <option value="130" >Crypteque (130 BPM)</option>
+            <option value="150">Disco Inferno (150 BPM)</option>
+          </select>
+          <small>Le BPM influence la vitesse du jeu</small>
         </div>
-      </label>
+      </div>
 
-      <label for="nbApple">Nombre de pommes :</label>
-      <input type="number" id="nbApple" min="1" max="10" value="5" />
-
-      <label>
-        <div class="form-checkbox">
-          <input type="checkbox" id="isAppleRespawn" checked />
-          <span>Les pommes réapparaissent</span>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="gridSize">Taille de la carte</label>
+          <input type="number" id="gridSize" min="5" max="20" value="8" />
+          <small>Entre 5 et 20 cases</small>
         </div>
-      </label>
 
-      <label for="tempoSnake">Tempo du serpent (0.1 à 1) :</label>
-      <input type="number" id="tempoSnake" min="0.1" max="1" step="0.1" value="0.9" />
-
-      <label>
-        <div class="form-checkbox">
-          <input type="checkbox" id="isOutTempoBomb" checked />
-          <span>Bombes hors tempo activées</span>
+        <div class="form-group">
+          <label for="isWallKilling"></label>
+          <div class="form-checkbox">
+            <input type="checkbox" id="isWallKilling" />
+            <span>Bord infranchissable</span>
+          </div>
         </div>
-      </label>
+      </div>
 
-      <button type="submit">Lancer le jeu</button>
+      <div class="form-row">
+        
+        <div class="form-group">
+          <label for="isAppleRespawn">Boules disco</label>
+          <div class="form-checkbox">
+            <input type="checkbox" id="isAppleRespawn" checked />
+            <span>Réappararition quand mangée </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="nbApple"></label>
+          <input type="number" id="nbApple" min="1" max="20" value="5" />
+          <small>De 1 à 20 simultanées</small>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="tempoSnake">Fenetre du timing (en %) </label>
+          <input type="number" id="tempoSnake" min="10" max="100" step="1" value="50" /> 
+          <small> Plus bas = plus strict</small>
+        </div>
+
+        <div class="form-group">
+          <label for="isOutTempoBomb">Bombes hors rythme</label>
+          <div class="form-checkbox">
+            <input type="checkbox" id="isOutTempoBomb" checked />
+            <span>Crânes si tu appuis hors tempo</span>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit">EN PISTE !</button>
     </form>
   </div>
 
   <script>
+    function applyPreset(mode) {
+      const form = document.getElementById('gameForm');
+      const presets = {
+        easy: {
+          soundOn: true,
+          bpm: "100",
+          gridSize: 6,
+          isWallKilling: false,
+          nbApple: 2,
+          isAppleRespawn: true,
+          tempoSnake: 50,
+          isOutTempoBomb: false,
+        },
+                medium: {
+                  soundOn: true,
+          bpm: "115",
+          gridSize: 8,
+          isWallKilling: false,
+          nbApple: 5,
+          isAppleRespawn: true,
+          tempoSnake: 40,
+          isOutTempoBomb: true,
+
+
+        },
+        hard: {
+                    soundOn: true,
+          bpm: "130",
+          gridSize: 9,
+          isWallKilling: true,
+          nbApple: 10,
+          isAppleRespawn: true,
+          tempoSnake: 33,
+          isOutTempoBomb: false,
+        },
+      };
+      const config = presets[mode];
+      for (const key in config) {
+        const el = document.getElementById(key);
+        if (!el) continue;
+        if (el.type === "checkbox") el.checked = config[key];
+        else el.value = config[key];
+      }
+    }
+
+    // Formulaire : lancer le jeu avec les paramètres dans l'URL
     document.getElementById('gameForm').addEventListener('submit', function (e) {
       e.preventDefault();
-
       const params = new URLSearchParams({
         soundOn: document.getElementById('soundOn').checked,
         bpm: document.getElementById('bpm').value,
@@ -146,12 +295,14 @@
         isWallKilling: document.getElementById('isWallKilling').checked,
         nbApple: document.getElementById('nbApple').value,
         isAppleRespawn: document.getElementById('isAppleRespawn').checked,
-        tempoSnake: document.getElementById('tempoSnake').value,
+        tempoSnake: document.getElementById('tempoSnake').value/100,
         isOutTempoBomb: document.getElementById('isOutTempoBomb').checked,
       });
-
       window.location.href = `game.html?${params.toString()}`;
     });
+
+    // Appliquer la config intermédiaire par défaut
+    window.onload = () => applyPreset('medium');
   </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-type BPM = 115 | 130 | 150;
+type BPM =  100 | 110 |115 | 126 | 130 | 150;
 
 const urlParams = new URLSearchParams(window.location.search);
 
@@ -25,7 +25,7 @@ const bpm : number [] = [115, 130, 150]
 function parseBPM(value: string | null, defaultValue: BPM): BPM {
   const n = parseInt(value ?? '', 10);
   
-  if (n === 115 || n===130|| n===150)
+  if (n === 100 ||n === 110 ||n === 115 ||n === 126 || n===130|| n===150)
   {
     return n as BPM
 
@@ -73,7 +73,10 @@ console.log(GS)
 
 
 export const audio = {
+  100: new Audio("../music/Paris.mp3"),
+  110: new Audio("../music/Knock Knock.mp3"),
   115: new Audio("../music/115.mp3"),
+  126: new Audio("../music/Hydrogen.flac"),
   130: new Audio("../music/130.mp3"),
   150: new Audio("../music/150.mp3"),
 };
