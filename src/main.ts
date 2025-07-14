@@ -158,6 +158,9 @@ const runGame = () => {
 
   audio[GS.bpm].volume = 0.5;
 
+    const overlay = document.getElementById("start-overlay");
+    if (overlay) overlay.style.display = "none";
+
   timeIsRunningOut()
 
   requestAnimationFrame(loop);

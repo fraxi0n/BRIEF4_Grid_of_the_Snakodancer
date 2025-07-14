@@ -129,3 +129,41 @@ p{
     text-shadow: 0 0 10px #f0f, 0 0 20px #f0f;
   }
 }
+
+
+#start-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.start-message {
+  font-family: 'Press Start 2P', monospace;
+  color: #00ffff;
+  font-size: 14px;
+  padding: 20px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid #ff00ff;
+  border-radius: 12px;
+  box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff;
+  animation: glowPulse 2s infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff;
+    text-shadow: 0 0 5px #0ff, 0 0 10px #f0f;
+  }
+  50% {
+    box-shadow: 0 0 10px #f0f, 0 0 20px #0ff;
+    text-shadow: 0 0 2px #ff0, 0 0 4px #0ff;
+  }
+}

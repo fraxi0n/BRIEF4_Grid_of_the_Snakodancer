@@ -86,12 +86,15 @@
     const params = new URLSearchParams(window.location.search);
     const score = params.get("score") || "N/A";
     const time = params.get("timeLeft") || "--:--";
+params.delete("score");
+params.delete("timeLeft");
+const filteredSearch = params.toString();
 
-    document.getElementById("display-time").textContent = "Temps : " + time;
+    document.getElementById("display-time").textContent = "Temps restant : " + time+"s";
     document.getElementById("display-score").textContent = "Score : " + score;
 
     document.getElementById("retry-button").addEventListener("click", () => {
-      window.location.href = "game.html" + window.location.search;
+      window.location.href = "game.html?" + filteredSearch
     });
   </script>
 
